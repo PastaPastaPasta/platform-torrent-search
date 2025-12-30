@@ -415,7 +415,6 @@ textarea.input-field {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: linear-gradient(180deg, var(--bg-primary) 0%, #12121f 100%);
 }
 
 /* Browse Header */
@@ -424,10 +423,9 @@ textarea.input-field {
   justify-content: space-between;
   align-items: center;
   padding: 24px 32px;
-  background: linear-gradient(135deg, var(--bg-secondary) 0%, #1a1a35 100%);
+  background: var(--bg-secondary);
   border-bottom: 1px solid var(--border-color);
   position: relative;
-  overflow: hidden;
 }
 
 .browse-header::before {
@@ -437,15 +435,12 @@ textarea.input-field {
   left: 0;
   right: 0;
   height: 3px;
-  background: linear-gradient(90deg, var(--dash-blue), var(--deep-blue), var(--dash-blue));
+  background: var(--dash-blue);
 }
 
 .browse-header h1 {
   font-size: 1.75rem;
-  background: linear-gradient(135deg, var(--dash-blue) 0%, #00b4ff 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--dash-blue);
   margin: 0;
   font-weight: 700;
   letter-spacing: -0.5px;
@@ -493,9 +488,8 @@ textarea.input-field {
 
 .tab.active {
   color: white;
-  background: linear-gradient(135deg, var(--dash-blue) 0%, #00b4ff 100%);
+  background: var(--dash-blue);
   border-color: transparent;
-  box-shadow: 0 4px 15px rgba(0, 141, 228, 0.4);
 }
 
 /* Search Container */
@@ -537,13 +531,11 @@ textarea.input-field {
 }
 
 .search-container .btn-primary {
-  background: linear-gradient(135deg, var(--dash-blue) 0%, #00b4ff 100%);
-  box-shadow: 0 4px 15px rgba(0, 141, 228, 0.3);
+  background: var(--dash-blue);
 }
 
 .search-container .btn-primary:hover:not(:disabled) {
-  box-shadow: 0 6px 20px rgba(0, 141, 228, 0.45);
-  transform: translateY(-2px);
+  background: #0070b8;
 }
 
 .search-container .btn-secondary {
@@ -566,35 +558,16 @@ textarea.input-field {
 
 /* Torrent Card */
 .torrent-card {
-  background: linear-gradient(145deg, var(--bg-secondary) 0%, #1a1a35 100%);
+  background: var(--bg-secondary);
   border: 1px solid var(--border-color);
-  border-radius: 16px;
+  border-radius: 12px;
   padding: 24px;
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
-}
-
-.torrent-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, var(--deep-blue), var(--dash-blue));
-  opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: all 0.2s ease;
 }
 
 .torrent-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(0, 141, 228, 0.3);
   border-color: var(--dash-blue);
-}
-
-.torrent-card:hover::before {
-  opacity: 1;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
 }
 
 .card-title {
@@ -650,14 +623,12 @@ textarea.input-field {
 }
 
 .btn-magnet {
-  background: linear-gradient(135deg, var(--dash-blue) 0%, #00b4ff 100%);
+  background: var(--dash-blue);
   color: white;
-  box-shadow: 0 4px 12px rgba(0, 141, 228, 0.3);
 }
 
 .btn-magnet:hover:not(:disabled) {
-  box-shadow: 0 6px 16px rgba(0, 141, 228, 0.5);
-  transform: translateY(-1px);
+  background: #0070b8;
 }
 
 .btn-copy {
@@ -749,7 +720,7 @@ textarea.input-field {
   justify-content: space-between;
   align-items: center;
   padding: 20px 32px;
-  background: linear-gradient(135deg, var(--bg-secondary) 0%, #1a1a35 100%);
+  background: var(--bg-secondary);
   border-top: 1px solid var(--border-color);
   font-size: 0.85rem;
 }
