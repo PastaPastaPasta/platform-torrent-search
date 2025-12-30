@@ -1,18 +1,32 @@
-/* Dark theme inspired by evo-sdk-website */
+/* Dash Brand Dark Theme */
+/* Fonts: Montserrat (primary), Roboto Condensed (secondary/compact) */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Roboto+Condensed:wght@400;500;700&display=swap');
+
 :root {
-  --bg-primary: #1a1a2e;
-  --bg-secondary: #16213e;
-  --bg-tertiary: #0f3460;
-  --text-primary: #eaeaea;
-  --text-secondary: #a0a0a0;
-  --accent-primary: #e94560;
-  --accent-secondary: #0077b6;
+  /* Dash Official Color Palette */
+  --dash-blue: #008DE4;      /* Primary brand accent */
+  --deep-blue: #012060;      /* Elevated/alternate surfaces */
+  --midnight-blue: #0B0F3B;  /* Cards/panels */
+  --black: #111921;          /* App background */
+  --gray: #787878;           /* Secondary text/borders */
+  --white: #FFFFFF;          /* Primary text */
+
+  /* Semantic mappings */
+  --bg-primary: var(--black);
+  --bg-secondary: var(--midnight-blue);
+  --bg-tertiary: var(--deep-blue);
+  --text-primary: var(--white);
+  --text-secondary: var(--gray);
+  --accent-primary: var(--dash-blue);
+  --accent-secondary: var(--deep-blue);
+
+  /* UI states (derived from palette) */
   --success: #00c853;
   --warning: #ffc107;
   --error: #ff5252;
-  --border-color: #2a2a4a;
-  --input-bg: #0d1b2a;
-  --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  --border-color: rgba(120, 120, 120, 0.3);
+  --input-bg: rgba(11, 15, 59, 0.6);
+  --shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
 }
 
 * {
@@ -22,7 +36,7 @@
 }
 
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
   background-color: var(--bg-primary);
   color: var(--text-primary);
   line-height: 1.6;
@@ -45,7 +59,7 @@ body {
 
 .header h1 {
   font-size: 1.8rem;
-  color: var(--accent-primary);
+  color: var(--dash-blue);
   margin-bottom: 5px;
 }
 
@@ -196,13 +210,13 @@ body {
 
 .btn-primary {
   width: 100%;
-  background-color: var(--accent-primary);
+  background-color: var(--dash-blue);
   color: white;
   font-weight: 600;
 }
 
 .btn-primary:hover:not(:disabled) {
-  background-color: #d63850;
+  background-color: #0070b8;
 }
 
 .btn-secondary {
@@ -353,7 +367,7 @@ textarea.input-field {
 
 .form-group.required label::after {
   content: ' *';
-  color: var(--accent-primary);
+  color: var(--dash-blue);
 }
 
 /* Loading Spinner */
@@ -363,7 +377,7 @@ textarea.input-field {
   height: 16px;
   border: 2px solid var(--text-secondary);
   border-radius: 50%;
-  border-top-color: var(--accent-primary);
+  border-top-color: var(--dash-blue);
   animation: spin 1s linear infinite;
   margin-right: 8px;
 }
@@ -423,12 +437,12 @@ textarea.input-field {
   left: 0;
   right: 0;
   height: 3px;
-  background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary), var(--accent-primary));
+  background: linear-gradient(90deg, var(--dash-blue), var(--deep-blue), var(--dash-blue));
 }
 
 .browse-header h1 {
   font-size: 1.75rem;
-  background: linear-gradient(135deg, var(--accent-primary) 0%, #ff6b8a 100%);
+  background: linear-gradient(135deg, var(--dash-blue) 0%, #00b4ff 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -479,9 +493,9 @@ textarea.input-field {
 
 .tab.active {
   color: white;
-  background: linear-gradient(135deg, var(--accent-primary) 0%, #ff6b8a 100%);
+  background: linear-gradient(135deg, var(--dash-blue) 0%, #00b4ff 100%);
   border-color: transparent;
-  box-shadow: 0 4px 15px rgba(233, 69, 96, 0.3);
+  box-shadow: 0 4px 15px rgba(0, 141, 228, 0.4);
 }
 
 /* Search Container */
@@ -523,12 +537,12 @@ textarea.input-field {
 }
 
 .search-container .btn-primary {
-  background: linear-gradient(135deg, var(--accent-primary) 0%, #ff6b8a 100%);
-  box-shadow: 0 4px 15px rgba(233, 69, 96, 0.25);
+  background: linear-gradient(135deg, var(--dash-blue) 0%, #00b4ff 100%);
+  box-shadow: 0 4px 15px rgba(0, 141, 228, 0.3);
 }
 
 .search-container .btn-primary:hover:not(:disabled) {
-  box-shadow: 0 6px 20px rgba(233, 69, 96, 0.35);
+  box-shadow: 0 6px 20px rgba(0, 141, 228, 0.45);
   transform: translateY(-2px);
 }
 
@@ -568,15 +582,15 @@ textarea.input-field {
   left: 0;
   right: 0;
   height: 3px;
-  background: linear-gradient(90deg, var(--accent-secondary), var(--accent-primary));
+  background: linear-gradient(90deg, var(--deep-blue), var(--dash-blue));
   opacity: 0;
   transition: opacity 0.3s ease;
 }
 
 .torrent-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(0, 119, 182, 0.3);
-  border-color: var(--accent-secondary);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(0, 141, 228, 0.3);
+  border-color: var(--dash-blue);
 }
 
 .torrent-card:hover::before {
@@ -615,7 +629,7 @@ textarea.input-field {
 }
 
 .card-meta-item strong {
-  color: var(--accent-secondary);
+  color: var(--dash-blue);
   font-weight: 600;
 }
 
@@ -636,13 +650,13 @@ textarea.input-field {
 }
 
 .btn-magnet {
-  background: linear-gradient(135deg, var(--accent-primary) 0%, #ff6b8a 100%);
+  background: linear-gradient(135deg, var(--dash-blue) 0%, #00b4ff 100%);
   color: white;
-  box-shadow: 0 4px 12px rgba(233, 69, 96, 0.25);
+  box-shadow: 0 4px 12px rgba(0, 141, 228, 0.3);
 }
 
 .btn-magnet:hover:not(:disabled) {
-  box-shadow: 0 6px 16px rgba(233, 69, 96, 0.4);
+  box-shadow: 0 6px 16px rgba(0, 141, 228, 0.5);
   transform: translateY(-1px);
 }
 
@@ -653,8 +667,8 @@ textarea.input-field {
 }
 
 .btn-copy:hover:not(:disabled) {
-  background: var(--accent-secondary);
-  border-color: var(--accent-secondary);
+  background: var(--dash-blue);
+  border-color: var(--dash-blue);
   color: white;
 }
 
@@ -675,7 +689,7 @@ textarea.input-field {
   border-width: 3px;
   margin-bottom: 20px;
   border-color: var(--border-color);
-  border-top-color: var(--accent-primary);
+  border-top-color: var(--dash-blue);
 }
 
 /* Empty State */
@@ -748,12 +762,12 @@ textarea.input-field {
 }
 
 .footer-info code {
-  font-family: 'Consolas', 'Monaco', monospace;
+  font-family: 'Roboto Condensed', 'Consolas', monospace;
   background: rgba(0, 0, 0, 0.3);
   padding: 4px 12px;
   border-radius: 6px;
   font-size: 0.8rem;
-  color: var(--accent-secondary);
+  color: var(--dash-blue);
 }
 
 .admin-link {
@@ -770,7 +784,7 @@ textarea.input-field {
 .admin-link:hover {
   color: var(--text-primary);
   background: var(--bg-tertiary);
-  border-color: var(--accent-secondary);
+  border-color: var(--dash-blue);
 }
 
 /* Browse Page Responsive */
