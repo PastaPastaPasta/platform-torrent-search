@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dash Torrent Repository</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div class="browse-container">
+    <!-- Header -->
+    <header class="browse-header">
+      <h1>Dash Torrent Repository</h1>
+      <div class="header-status">
+        <span class="status-label">Status:</span>
+        <span id="sdkStatus" class="status-value status-disconnected">Connecting...</span>
+      </div>
+    </header>
+
+    <!-- Tabs -->
+    <nav class="tab-bar">
+      <button class="tab active" data-type="movie">Movies</button>
+      <button class="tab" data-type="tv">TV Shows</button>
+      <button class="tab" data-type="book">Books</button>
+      <button class="tab" data-type="iso">Software</button>
+      <button class="tab" data-type="other">Other</button>
+    </nav>
+
+    <!-- Search -->
+    <div class="search-container">
+      <input type="text" id="searchInput" class="search-input" placeholder="Search by IMDB ID (e.g., tt0133093)">
+      <button id="searchBtn" class="btn btn-primary">Search</button>
+      <button id="clearSearchBtn" class="btn btn-secondary">Clear</button>
+    </div>
+
+    <!-- Results -->
+    <main class="results-container">
+      <div id="resultsGrid" class="results-grid">
+        <!-- Torrent cards rendered here -->
+      </div>
+      <div id="loadingIndicator" class="loading-indicator">
+        <span class="loading"></span>
+        <span>Loading torrents...</span>
+      </div>
+      <div id="emptyState" class="empty-state" style="display: none;">
+        <p>No torrents found</p>
+        <p class="empty-hint">Try a different search or switch tabs</p>
+      </div>
+      <div id="errorState" class="error-state" style="display: none;">
+        <p id="errorMessage">An error occurred</p>
+      </div>
+    </main>
+
+    <!-- Pagination -->
+    <div class="pagination" id="pagination" style="display: none;">
+      <button id="prevPageBtn" class="btn btn-secondary" disabled>Previous</button>
+      <span id="pageInfo" class="page-info">Page 1</span>
+      <button id="nextPageBtn" class="btn btn-secondary">Next</button>
+    </div>
+
+    <!-- Footer -->
+    <footer class="browse-footer">
+      <span class="footer-info">
+        Contract: <code id="contractIdDisplay">Loading...</code>
+      </span>
+      <a href="admin.html" class="admin-link">Admin Panel</a>
+    </footer>
+  </div>
+
+  <script type="module" src="js/browse-app.js"></script>
+</body>
+</html>

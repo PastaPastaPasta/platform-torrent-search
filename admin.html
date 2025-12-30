@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dash Torrent Repository - Phase 1 Admin (v2)</title>
+  <link rel="stylesheet" href="css/styles.css">
+
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <h1>Dash Torrent Repository</h1>
+      <span class="subtitle">Phase 1 Admin Interface (v2)</span>
+      <a href="index.html" style="color: var(--accent-secondary); font-size: 0.85rem; margin-top: 8px; display: inline-block;">Back to Browse</a>
+    </header>
+
+    <main class="main-content">
+      <!-- Left Panel: Controls -->
+      <aside class="sidebar">
+        <!-- Network Selection -->
+        <section class="section">
+          <h3>Network</h3>
+          <div class="radio-group">
+            <label class="radio-label">
+              <input type="radio" name="network" value="testnet" checked>
+              <span>Testnet</span>
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="network" value="mainnet">
+              <span>Mainnet</span>
+            </label>
+          </div>
+        </section>
+
+        <!-- Identity ID -->
+        <section class="section">
+          <h3>Identity ID</h3>
+          <input type="text" id="identityId" placeholder="e.g., 5DbLwAxGBzUzo81VewMUwn4b5P4bpv9FNFybi25XB5Bk" class="input-field">
+          <small>Your Dash Platform identity (base58)</small>
+        </section>
+
+        <!-- Private Key -->
+        <section class="section">
+          <h3>Private Key (WIF)</h3>
+          <input type="password" id="privateKey" placeholder="Enter your private key..." class="input-field">
+          <small class="warning">Never use keys with real funds for testing!</small>
+        </section>
+
+        <!-- Contract ID (for document submission) -->
+        <section class="section">
+          <h3>Contract ID</h3>
+          <input type="text" id="contractId" placeholder="Will be set after registration..." class="input-field">
+          <small>Stored in localStorage after registration</small>
+        </section>
+
+        <!-- Action Selection -->
+        <section class="section">
+          <h3>Action</h3>
+          <div class="radio-group">
+            <label class="radio-label">
+              <input type="radio" name="action" value="register">
+              <span>Register Contract</span>
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="action" value="submit">
+              <span>Submit Torrent</span>
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="action" value="query" checked>
+              <span>Query Documents</span>
+            </label>
+          </div>
+        </section>
+
+        <!-- Document Type (shown when submitting) -->
+        <section class="section" id="docTypeSection" style="display: none;">
+          <h3>Document Type</h3>
+          <select id="documentType" class="select-field">
+            <option value="movie">Movie</option>
+            <option value="tv">TV Show</option>
+            <option value="book">Book</option>
+            <option value="iso">ISO / Software</option>
+            <option value="other">Other</option>
+          </select>
+        </section>
+
+        <!-- Magnet Link Parser (shown when submitting) -->
+        <section class="section" id="magnetSection" style="display: none;">
+          <h3>Magnet Link (Optional)</h3>
+          <div class="magnet-input-group">
+            <input type="text" id="magnetLink" placeholder="magnet:?xt=urn:btih:..." class="input-field">
+            <button type="button" id="parseMagnetBtn" class="btn btn-secondary">Parse</button>
+          </div>
+          <small>Auto-fills infoHash and torrentName</small>
+        </section>
+
+        <!-- Dynamic Form Fields (for submit) -->
+        <section class="section" id="formFieldsSection" style="display: none;">
+          <h3>Document Data</h3>
+          <div id="dynamicForm">
+            <!-- Fields will be generated dynamically -->
+          </div>
+        </section>
+
+        <!-- Query Options (for query) -->
+        <section class="section" id="querySection" style="display: none;">
+          <h3>Query Options</h3>
+          <div class="form-group">
+            <label for="queryField">Search Field</label>
+            <select id="queryField" class="select-field">
+              <!-- Options populated dynamically based on document type -->
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="queryOperator">Match Type</label>
+            <select id="queryOperator" class="select-field">
+              <option value="startsWith">Starts With</option>
+              <option value="==">Exact Match</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="queryValue">Search Value</label>
+            <input type="text" id="queryValue" placeholder="Leave empty for all documents" class="input-field">
+          </div>
+          <div class="form-group">
+            <label for="queryLimit">Limit</label>
+            <input type="number" id="queryLimit" value="10" min="1" max="100" class="input-field">
+          </div>
+        </section>
+
+        <!-- Execute Button -->
+        <section class="section">
+          <button type="button" id="executeBtn" class="btn btn-primary">
+            <span id="executeBtnText">Register Contract</span>
+          </button>
+        </section>
+      </aside>
+
+      <!-- Right Panel: Results -->
+      <section class="results-panel">
+        <div class="results-header">
+          <h3>Results / Status</h3>
+          <div class="results-actions">
+            <button type="button" id="copyBtn" class="btn btn-small">Copy</button>
+            <button type="button" id="clearBtn" class="btn btn-small">Clear</button>
+          </div>
+        </div>
+
+        <!-- Status Info -->
+        <div class="status-bar">
+          <div class="status-item">
+            <span class="status-label">SDK Status:</span>
+            <span id="sdkStatus" class="status-value status-disconnected">Not Initialized</span>
+          </div>
+          <div class="status-item">
+            <span class="status-label">WASM:</span>
+            <span id="wasmStatus" class="status-value">Loading...</span>
+          </div>
+          <div class="status-item">
+            <span class="status-label">Network:</span>
+            <span id="networkStatus" class="status-value">Testnet</span>
+          </div>
+        </div>
+
+        <!-- Output Area -->
+        <div class="output-container">
+          <pre id="outputArea" class="output-area">Ready. Select an action and click Execute.</pre>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Load SDK and app scripts -->
+  <script type="module" src="js/admin-app.js"></script>
+</body>
+</html>

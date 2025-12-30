@@ -1,0 +1,24 @@
+{
+  "name": "platform-torrents",
+  "version": "1.0.0",
+  "description": "Decentralized Torrent Repository on Dash Platform - Phase 1 Admin Interface",
+  "type": "module",
+  "scripts": {
+    "start": "http-server -p 8080 -c-1",
+    "dev": "http-server -p 8080 -c-1 -o"
+  },
+  "dependencies": {
+    "@dashevo/evo-sdk": "^2.1.3"
+  },
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  },
+  "keywords": [
+    "dash",
+    "platform",
+    "torrent",
+    "decentralized",
+    "blockchain"
+  ],
+  "license": "MIT"
+}
