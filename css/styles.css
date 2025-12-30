@@ -59,13 +59,34 @@ body {
 
 .header h1 {
   font-size: 1.8rem;
-  color: var(--dash-blue);
+  color: var(--text-primary);
   margin-bottom: 5px;
 }
 
 .subtitle {
   color: var(--text-secondary);
   font-size: 0.9rem;
+}
+
+.powered-by {
+  display: block;
+  color: var(--dash-blue);
+  font-size: 0.75rem;
+  font-weight: 500;
+  margin-top: 4px;
+}
+
+.back-link {
+  display: inline-block;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  margin-top: 12px;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.back-link:hover {
+  color: var(--text-primary);
 }
 
 /* Main Content - Two Panel Layout */
@@ -367,7 +388,7 @@ textarea.input-field {
 
 .form-group.required label::after {
   content: ' *';
-  color: var(--dash-blue);
+  color: var(--error);
 }
 
 /* Loading Spinner */
