@@ -4,28 +4,34 @@
 
 :root {
   /* Dash Official Color Palette */
-  --dash-blue: #008DE4;      /* Primary brand accent */
-  --deep-blue: #012060;      /* Elevated/alternate surfaces */
-  --midnight-blue: #0B0F3B;  /* Cards/panels */
+  --dash-blue: #008DE4;      /* Primary brand accent - use sparingly */
+  --deep-blue: #012060;      /* Reserved for subtle accents */
+  --midnight-blue: #0B0F3B;  /* Reserved for subtle accents */
   --black: #111921;          /* App background */
   --gray: #787878;           /* Secondary text/borders */
   --white: #FFFFFF;          /* Primary text */
 
-  /* Semantic mappings */
-  --bg-primary: var(--black);
-  --bg-secondary: var(--midnight-blue);
-  --bg-tertiary: var(--deep-blue);
+  /* Neutral dark palette */
+  --neutral-900: #0d0f12;    /* Darkest - main bg */
+  --neutral-800: #181a1f;    /* Cards/panels */
+  --neutral-700: #23262d;    /* Elevated surfaces */
+  --neutral-600: #2e323a;    /* Hover states */
+
+  /* Semantic mappings - neutral, not blue */
+  --bg-primary: var(--neutral-900);
+  --bg-secondary: var(--neutral-800);
+  --bg-tertiary: var(--neutral-700);
   --text-primary: var(--white);
   --text-secondary: var(--gray);
   --accent-primary: var(--dash-blue);
-  --accent-secondary: var(--deep-blue);
+  --accent-secondary: var(--neutral-600);
 
-  /* UI states (derived from palette) */
+  /* UI states */
   --success: #00c853;
   --warning: #ffc107;
   --error: #ff5252;
-  --border-color: rgba(120, 120, 120, 0.3);
-  --input-bg: rgba(11, 15, 59, 0.6);
+  --border-color: rgba(255, 255, 255, 0.1);
+  --input-bg: rgba(0, 0, 0, 0.3);
   --shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
 }
 
@@ -246,7 +252,7 @@ body {
 }
 
 .btn-secondary:hover:not(:disabled) {
-  background-color: #1a4a80;
+  background-color: var(--neutral-600);
 }
 
 .btn-small {
