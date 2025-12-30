@@ -3,8 +3,8 @@
  * Initializes SDK and loads browse UI
  */
 
-import { CONFIG } from './browse-config.js';
-import { initBrowseUI, updateSdkStatus, loadCurrentTab } from './browse-ui.js';
+import { CONFIG, loadSettings, hasSettings } from './browse-config.js';
+import { initBrowseUI, updateSdkStatus, loadCurrentTab, showSettingsModal, updateContractDisplay } from './browse-ui.js';
 import { sdkClient } from './sdk-client.js';
 
 /**
@@ -13,19 +13,33 @@ import { sdkClient } from './sdk-client.js';
 async function init() {
   console.log('Initializing Dash Torrent Repository Browse Interface...');
 
+  // Try to load saved settings from localStorage
+  loadSettings();
+
   // Initialize UI handlers
   initBrowseUI();
 
-  // Display contract ID in footer
-  const contractDisplay = document.getElementById('contractIdDisplay');
-  if (contractDisplay) {
-    contractDisplay.textContent = CONFIG.contractId;
-  }
+  // Update contract display in footer
+  updateContractDisplay();
 
   // Set up SDK status callback
   sdkClient.setStatusCallback((status, message) => {
     updateSdkStatus(status, message);
   });
+
+  // Listen for settings changes to reconnect
+  window.addEventListener('settings-changed', async () => {
+    console.log('Settings changed, reconnecting...');
+    await connectAndLoad();
+  });
+
+  // Check if settings are configured
+  if (!hasSettings()) {
+    // Show settings modal - user must configure before using
+    updateSdkStatus('disconnected', 'Not configured');
+    showSettingsModal();
+    return;
+  }
 
   // Load EvoSDK and connect
   await loadEvoSDK();
@@ -44,8 +58,21 @@ async function loadEvoSDK() {
     // Store globally for sdk-client to use
     window.EvoSDK = EvoSDK;
 
-    updateSdkStatus('loading', 'Connecting to network...');
+    await connectToNetwork();
 
+  } catch (error) {
+    console.error('Failed to initialize:', error);
+    updateSdkStatus('error', `Failed: ${error.message}`);
+  }
+}
+
+/**
+ * Connect to the network and load data
+ */
+async function connectToNetwork() {
+  updateSdkStatus('loading', 'Connecting to network...');
+
+  try {
     // Connect to the configured network
     await sdkClient.connect(CONFIG.network);
 
@@ -55,8 +82,23 @@ async function loadEvoSDK() {
     loadCurrentTab();
 
   } catch (error) {
-    console.error('Failed to initialize:', error);
+    console.error('Failed to connect:', error);
     updateSdkStatus('error', `Failed: ${error.message}`);
+  }
+}
+
+/**
+ * Handle settings change - reconnect with new settings
+ */
+async function connectAndLoad() {
+  // Update footer display
+  updateContractDisplay();
+
+  // If SDK is already loaded, just reconnect
+  if (window.EvoSDK) {
+    await connectToNetwork();
+  } else {
+    await loadEvoSDK();
   }
 }
 

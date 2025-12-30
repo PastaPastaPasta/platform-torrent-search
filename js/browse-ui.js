@@ -4,7 +4,7 @@
  */
 
 import { sdkClient } from './sdk-client.js';
-import { CONFIG, TAB_CONFIG } from './browse-config.js';
+import { CONFIG, TAB_CONFIG, saveSettings, clearSettings, hasSettings } from './browse-config.js';
 import { buildMagnetUri, formatImdbId, formatWorkId, formatBytes, parseImdbId, parseWorkId, bytesToHex } from './utils.js';
 
 // State
@@ -38,7 +38,16 @@ export function initBrowseUI() {
     prevPageBtn: document.getElementById('prevPageBtn'),
     nextPageBtn: document.getElementById('nextPageBtn'),
     pageInfo: document.getElementById('pageInfo'),
-    tabs: document.querySelectorAll('.tab')
+    tabs: document.querySelectorAll('.tab'),
+    contractIdDisplay: document.getElementById('contractIdDisplay'),
+    // Settings modal elements
+    settingsBtn: document.getElementById('settingsBtn'),
+    settingsModal: document.getElementById('settingsModal'),
+    networkToggle: document.getElementById('networkToggle'),
+    networkRadios: document.querySelectorAll('input[name="network"]'),
+    contractIdInput: document.getElementById('contractIdInput'),
+    settingsCancelBtn: document.getElementById('settingsCancelBtn'),
+    settingsSaveBtn: document.getElementById('settingsSaveBtn')
   };
 
   // Set up event listeners
@@ -76,6 +85,19 @@ function setupEventListeners() {
   // Pagination
   elements.prevPageBtn.addEventListener('click', loadPreviousPage);
   elements.nextPageBtn.addEventListener('click', loadNextPage);
+
+  // Settings modal
+  elements.settingsBtn.addEventListener('click', showSettingsModal);
+  elements.settingsCancelBtn.addEventListener('click', hideSettingsModal);
+  elements.settingsSaveBtn.addEventListener('click', handleSaveSettings);
+  elements.settingsModal.addEventListener('click', (e) => {
+    if (e.target === elements.settingsModal) {
+      // Only allow closing by clicking overlay if settings are configured
+      if (hasSettings()) {
+        hideSettingsModal();
+      }
+    }
+  });
 }
 
 /**
@@ -160,8 +182,11 @@ export async function loadCurrentTab() {
   showLoading();
 
   try {
+    const tabConfig = TAB_CONFIG[activeTab];
     const options = {
-      limit: CONFIG.pageSize
+      limit: CONFIG.pageSize,
+      // orderBy is required for range queries (startsWith) - must match the index field
+      orderBy: [[tabConfig.indexField, 'asc']]
     };
 
     // Add cursor for pagination if not first page
@@ -245,6 +270,105 @@ function clearSearch() {
   isSearchMode = false;
   resetPagination();
   loadCurrentTab();
+}
+
+// =====================================================
+// SETTINGS MODAL
+// =====================================================
+
+/**
+ * Show the settings modal
+ */
+export function showSettingsModal() {
+  // Pre-fill with current values if they exist
+  if (CONFIG.network) {
+    const radio = document.querySelector(`input[name="network"][value="${CONFIG.network}"]`);
+    if (radio) radio.checked = true;
+  } else {
+    // Clear all radio selections
+    elements.networkRadios.forEach(r => r.checked = false);
+  }
+  if (CONFIG.contractId) {
+    elements.contractIdInput.value = CONFIG.contractId;
+  } else {
+    elements.contractIdInput.value = '';
+  }
+
+  // Hide cancel button if no settings configured (force user to configure)
+  elements.settingsCancelBtn.style.display = hasSettings() ? 'block' : 'none';
+
+  elements.settingsModal.classList.add('active');
+}
+
+/**
+ * Hide the settings modal
+ */
+export function hideSettingsModal() {
+  elements.settingsModal.classList.remove('active');
+  // Clear any error states
+  elements.networkToggle.classList.remove('input-error');
+  elements.contractIdInput.classList.remove('input-error');
+}
+
+/**
+ * Handle saving settings from the modal
+ */
+async function handleSaveSettings() {
+  const selectedNetwork = document.querySelector('input[name="network"]:checked');
+  const network = selectedNetwork ? selectedNetwork.value : '';
+  const contractId = elements.contractIdInput.value.trim();
+
+  // Validate
+  let valid = true;
+
+  if (!network) {
+    elements.networkToggle.classList.add('input-error');
+    valid = false;
+  } else {
+    elements.networkToggle.classList.remove('input-error');
+  }
+
+  if (!contractId) {
+    elements.contractIdInput.classList.add('input-error');
+    valid = false;
+  } else {
+    elements.contractIdInput.classList.remove('input-error');
+  }
+
+  if (!valid) {
+    return;
+  }
+
+  // Save settings
+  saveSettings(contractId, network);
+
+  // Update footer display
+  updateContractDisplay();
+
+  // Hide modal
+  hideSettingsModal();
+
+  // Trigger reconnection with new settings
+  window.dispatchEvent(new CustomEvent('settings-changed'));
+}
+
+/**
+ * Update the contract ID display in the footer
+ */
+export function updateContractDisplay() {
+  if (elements.contractIdDisplay) {
+    if (CONFIG.contractId) {
+      // Show truncated contract ID
+      const id = CONFIG.contractId;
+      elements.contractIdDisplay.textContent = id.length > 20
+        ? `${id.substring(0, 8)}...${id.substring(id.length - 8)}`
+        : id;
+      elements.contractIdDisplay.title = CONFIG.contractId;
+    } else {
+      elements.contractIdDisplay.textContent = 'Not configured';
+      elements.contractIdDisplay.title = '';
+    }
+  }
 }
 
 /**

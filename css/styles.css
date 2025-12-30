@@ -765,7 +765,12 @@ textarea.input-field {
   color: var(--text-secondary);
 }
 
-.admin-link {
+/* Footer action buttons - unified styling */
+.admin-link,
+.settings-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   color: var(--text-secondary);
   text-decoration: none;
   padding: 8px 16px;
@@ -774,11 +779,184 @@ textarea.input-field {
   border: 1px solid var(--border-color);
   transition: all 0.2s ease;
   font-weight: 500;
+  font-size: 0.85rem;
+  font-family: inherit;
+  line-height: 1.4;
+  cursor: pointer;
+  box-sizing: border-box;
 }
 
-.admin-link:hover {
+.admin-link:hover,
+.settings-btn:hover {
   color: var(--text-primary);
   background: var(--bg-tertiary);
+}
+
+.footer-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+/* Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  width: 90%;
+  max-width: 480px;
+  transform: translateY(20px);
+  transition: transform 0.3s ease;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+.modal-overlay.active .modal {
+  transform: translateY(0);
+}
+
+.modal-header {
+  padding: 28px 28px 20px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.modal-header h2 {
+  font-size: 1.4rem;
+  color: var(--text-primary);
+  margin: 0 0 8px 0;
+  font-weight: 700;
+}
+
+.modal-subtitle {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.modal-body {
+  padding: 24px 28px;
+}
+
+.modal-body .form-group {
+  margin-bottom: 20px;
+}
+
+.modal-body .form-group:last-child {
+  margin-bottom: 0;
+}
+
+.modal-body .form-group label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.modal-body .input-field {
+  width: 100%;
+  padding: 12px 16px;
+  font-size: 0.95rem;
+}
+
+/* Network Toggle */
+.network-toggle {
+  display: flex;
+  gap: 12px;
+}
+
+.toggle-option {
+  flex: 1;
+  cursor: pointer;
+}
+
+.toggle-option input[type="radio"] {
+  display: none;
+}
+
+.toggle-label {
+  display: block;
+  padding: 14px 20px;
+  text-align: center;
+  background: var(--input-bg);
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  transition: all 0.2s ease;
+}
+
+.toggle-option:hover .toggle-label {
+  border-color: rgba(255, 255, 255, 0.2);
+  color: var(--text-primary);
+}
+
+.toggle-option input[type="radio"]:checked + .toggle-label {
+  background: rgba(0, 141, 228, 0.15);
+  border-color: var(--dash-blue);
+  color: var(--text-primary);
+}
+
+.network-toggle.input-error .toggle-label {
+  border-color: var(--error);
+}
+
+.modal-body small {
+  margin-top: 8px;
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+}
+
+.modal-footer {
+  padding: 20px 28px 28px;
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+.modal-footer .btn {
+  min-width: 120px;
+  padding: 12px 24px;
+  font-weight: 600;
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+
+.modal-footer .btn-primary,
+.modal-footer .btn-secondary {
+  width: auto;
+}
+
+/* Modal validation error */
+.input-error {
+  border-color: var(--error) !important;
+}
+
+.error-message {
+  color: var(--error);
+  font-size: 0.8rem;
+  margin-top: 6px;
 }
 
 /* Browse Page Responsive */

@@ -64,10 +64,47 @@
     <!-- Footer -->
     <footer class="browse-footer">
       <span class="footer-info">
-        Contract: <code id="contractIdDisplay">Loading...</code>
+        Contract: <code id="contractIdDisplay">Not configured</code>
       </span>
-      <a href="admin.html" class="admin-link">Admin Panel</a>
+      <div class="footer-actions">
+        <button id="settingsBtn" class="settings-btn">Settings</button>
+        <a href="admin.html" class="admin-link">Admin Panel</a>
+      </div>
     </footer>
+  </div>
+
+  <!-- Settings Modal -->
+  <div id="settingsModal" class="modal-overlay">
+    <div class="modal">
+      <div class="modal-header">
+        <h2>Configure Connection</h2>
+        <p class="modal-subtitle">Enter the network and contract details to browse torrents</p>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Network</label>
+          <div class="network-toggle" id="networkToggle">
+            <label class="toggle-option">
+              <input type="radio" name="network" value="testnet">
+              <span class="toggle-label">Testnet</span>
+            </label>
+            <label class="toggle-option">
+              <input type="radio" name="network" value="mainnet">
+              <span class="toggle-label">Mainnet</span>
+            </label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="contractIdInput">Contract ID</label>
+          <input type="text" id="contractIdInput" class="input-field" placeholder="Enter contract ID (e.g., 2UGyMaAc1bhk92gk...)">
+          <small>The Dash Platform data contract ID containing torrent metadata</small>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="settingsCancelBtn" class="btn btn-secondary">Cancel</button>
+        <button id="settingsSaveBtn" class="btn btn-primary">Connect</button>
+      </div>
+    </div>
   </div>
 
   <script type="module" src="js/browse-app.js"></script>
