@@ -408,10 +408,9 @@ textarea.input-field {
    BROWSE PAGE STYLES - Enhanced UI
    ===================================================== */
 
-/* Browse Container */
+/* Browse Container - Full width */
 .browse-container {
-  max-width: 1400px;
-  margin: 0 auto;
+  width: 100%;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -422,28 +421,30 @@ textarea.input-field {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 24px 32px;
+  padding: 24px 48px;
   background: var(--bg-secondary);
   border-bottom: 1px solid var(--border-color);
-  position: relative;
 }
 
-.browse-header::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: var(--dash-blue);
+.header-branding {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
 .browse-header h1 {
   font-size: 1.75rem;
-  color: var(--dash-blue);
+  color: var(--text-primary);
   margin: 0;
   font-weight: 700;
   letter-spacing: -0.5px;
+}
+
+.tagline {
+  font-size: 0.8rem;
+  color: var(--dash-blue);
+  font-weight: 500;
+  letter-spacing: 0.3px;
 }
 
 .header-status {
@@ -459,44 +460,40 @@ textarea.input-field {
 /* Tab Bar */
 .tab-bar {
   display: flex;
-  gap: 8px;
-  padding: 16px 32px;
+  gap: 4px;
+  padding: 0 48px;
   background: var(--bg-secondary);
   border-bottom: 1px solid var(--border-color);
   overflow-x: auto;
 }
 
 .tab {
-  padding: 12px 28px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid transparent;
-  border-radius: 8px;
+  padding: 16px 24px;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
   color: var(--text-secondary);
   font-size: 0.9rem;
-  font-weight: 600;
+  font-weight: 500;
   cursor: pointer;
-  transition: all 0.25s ease;
+  transition: all 0.2s ease;
   white-space: nowrap;
-  position: relative;
 }
 
 .tab:hover {
   color: var(--text-primary);
-  background: rgba(255, 255, 255, 0.06);
-  border-color: var(--border-color);
 }
 
 .tab.active {
-  color: white;
-  background: var(--dash-blue);
-  border-color: transparent;
+  color: var(--text-primary);
+  border-bottom-color: var(--dash-blue);
 }
 
 /* Search Container */
 .search-container {
   display: flex;
   gap: 12px;
-  padding: 20px 32px;
+  padding: 20px 48px;
   background: rgba(0, 0, 0, 0.15);
   border-bottom: 1px solid var(--border-color);
 }
@@ -546,7 +543,7 @@ textarea.input-field {
 /* Results Container */
 .results-container {
   flex: 1;
-  padding: 32px;
+  padding: 32px 48px;
 }
 
 /* Results Grid */
@@ -566,7 +563,7 @@ textarea.input-field {
 }
 
 .torrent-card:hover {
-  border-color: var(--dash-blue);
+  border-color: rgba(255, 255, 255, 0.15);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
 }
 
@@ -602,7 +599,7 @@ textarea.input-field {
 }
 
 .card-meta-item strong {
-  color: var(--dash-blue);
+  color: var(--text-primary);
   font-weight: 600;
 }
 
@@ -719,7 +716,7 @@ textarea.input-field {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 32px;
+  padding: 20px 48px;
   background: var(--bg-secondary);
   border-top: 1px solid var(--border-color);
   font-size: 0.85rem;
@@ -738,7 +735,7 @@ textarea.input-field {
   padding: 4px 12px;
   border-radius: 6px;
   font-size: 0.8rem;
-  color: var(--dash-blue);
+  color: var(--text-secondary);
 }
 
 .admin-link {
@@ -755,7 +752,6 @@ textarea.input-field {
 .admin-link:hover {
   color: var(--text-primary);
   background: var(--bg-tertiary);
-  border-color: var(--dash-blue);
 }
 
 /* Browse Page Responsive */
@@ -767,17 +763,21 @@ textarea.input-field {
     padding: 20px;
   }
 
+  .header-branding {
+    align-items: center;
+  }
+
   .browse-header h1 {
     font-size: 1.4rem;
   }
 
   .tab-bar {
-    padding: 12px 16px;
-    gap: 6px;
+    padding: 0 16px;
+    gap: 0;
   }
 
   .tab {
-    padding: 10px 18px;
+    padding: 14px 16px;
     font-size: 0.85rem;
   }
 

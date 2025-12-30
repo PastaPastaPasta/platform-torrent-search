@@ -1,6 +1,6 @@
-# Dash Torrent Repository
+# Unstoppable Torrents
 
-A decentralized torrent metadata repository built on Dash Platform. Browse, search, and share torrent metadata stored on the blockchain.
+A decentralized torrent metadata repository powered by Dash Platform. Browse, search, and share torrent metadata stored on the blockchain - censorship-resistant and unstoppable.
 
 ## Features
 
